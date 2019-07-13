@@ -5,7 +5,32 @@
       </head>
       <body>
         <p>Welcome to the chat app</p>
+
+        <canvas id="frame" width="500" height="500" style="border:2px solid #000000">
+        
+        </canvas>
+
+        <script src="/socket.io/socket.io.js"></script>
+            <script>
+                var socket = io(); 
+                var c = document.getElementById("frame");
+                var ctx = c.getContext("2d");
+                
+                socket.on('connect', ()=>{
+                    console.log('Connect to Server');
+                    ctx.font = "30px Ariel Black";
+                    ctx.fillText("Connected to Server", 100, 250);
+                
+                });
+
+                socket.on('disconnect', ()=>{
+                    console.log('Disconnected from Server');
+                });
+
+                
+                
+            </script>
+
       </body>
       </html>
 
-      
