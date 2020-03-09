@@ -1,4 +1,4 @@
-var expect = require('expect');
+const jest = require('jest')
 
 var {generateMessage} = require('./message');
 
@@ -8,7 +8,7 @@ describe('generateMessage', () => {
     var text = 'Some message';
     var message = generateMessage(from, text);
 
-   // expect(message.createdAt).toBe(expect.any(Number));
+    expect(message.createdAt).toBe(number);
     expect(message).toInclude({from, text});
   });
 });
