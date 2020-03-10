@@ -17,7 +17,16 @@ function scrollToBottom () {
 }
 
 socket.on('connect', () => {
-  console.log('Connected to server');
+  var params = jQuery.deparam(window.location.search);
+
+  socket.emit('join', params, function (err) {
+    if(err){
+      alert(err);
+      window.location.href = '/';
+    } else {
+      console.log('No error');
+    }
+  });
 });
 
 socket.on('disconnect', () => {
@@ -50,21 +59,3 @@ jQuery('#message-form').on('submit', function (e){
   });
 });
 
-var locationButton = jQuery('#send-location');
-locationButton.on('click', function (){
-  if (!navigator.geolocation){
-    return alert('Geolocation not supported by your browser.');
-  }
-  locationButton.attr('disabled', 'disabled').text('Sending location...');
-
-  navigator.geolocation.getCurrentPosition(function (position){
-    locationButton.removeAttr('disabled').text('Send location');
-    socket.emit('createLocationMessage', {
-      latitude: position.coords.latitude,
-      longitude: position.coords.longitude
-    });
-  }, function () {
-    locationButton.removeAttr('disabled').text('Send location');
-    alert('Unable to fetch location.');
-  });
-});
