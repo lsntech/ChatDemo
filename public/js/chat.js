@@ -1,6 +1,15 @@
+
+/*
+ * Project: Chatdemo
+ * Desctiption: Simple Socket.io chat app
+ * Copyright(c) 2020 Leandro Silva
+ * License: MIT Licensed
+ */
+
+ 
 var socket = io();
 
-function scrollToBottom () {
+function scrollToBottom() {
   //selectors
   var messages = jQuery('#messages');
   var newMessage = messages.children('li:last-child');
@@ -11,16 +20,16 @@ function scrollToBottom () {
   var newMessageHeight = newMessage.innerHeight();
   var lastMessageHeight = newMessage.prev().innerHeight();
 
-  if(clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
+  if (clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
     messages.scrollTop(scrollHeight);
-   }
+  }
 }
 
 socket.on('connect', () => {
   var params = jQuery.deparam(window.location.search);
 
   socket.emit('join', params, function (err) {
-    if(err){
+    if (err) {
       alert(err);
       window.location.href = '/';
     } else {
@@ -46,7 +55,7 @@ socket.on('newMessage', function (message) {
   scrollToBottom();
 });
 
-jQuery('#message-form').on('submit', function (e){
+jQuery('#message-form').on('submit', function (e) {
   e.preventDefault();
 
   var messageTextbox = jQuery('[name=message]');
@@ -54,7 +63,7 @@ jQuery('#message-form').on('submit', function (e){
   socket.emit('createMessage', {
     from: 'User',
     text: messageTextbox.val()
-  }, function (){
+  }, function () {
     messageTextbox.val('')
   });
 });

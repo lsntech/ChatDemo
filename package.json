@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/server.js",
-    "test": "mocha server/**/*.test.js",
-    "test-watch": "nodemon --exec 'npm test'"
-  },
+},
   "author": "Leandro Silva",
   "license": "ISC",
   "dependencies": {
@@ -15,7 +13,6 @@
     "socket.io": "^2.2.0"
   },
   "devDependencies": {
-    "mocha": "^7.1.0",
     "jest": "^25.1.0",
     "nodemon": "^2.0.2"
   }

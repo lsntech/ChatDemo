@@ -1,11 +1,20 @@
+
+/*
+ * Project: Chatdemo
+ * Desctiption: Simple Socket.io chat app
+ * Copyright(c) 2020 Leandro Silva
+ * License: MIT Licensed
+ */
+
+ 
 const path = require('path');
 const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
 
-const {generateMessage} = require('./utils/message');
-const {isRealString} = require('./utils/validation');
-const {Users} = require('./utils/users');
+const { generateMessage } = require('./utils/message');
+const { isRealString } = require('./utils/validation');
+const { Users } = require('./utils/users');
 
 const publicPath = path.join(__dirname, '../public');
 const port = process.env.PORT || 3000;
@@ -22,7 +31,7 @@ io.on('connection', (socket) => {
   console.log('New user connected');
 
   socket.on('join', (params, callback) => {
-    if(!isRealString(params.name) || !isRealString(params.room)) {
+    if (!isRealString(params.name) || !isRealString(params.room)) {
       return callback('Name and room name are required.');
     }
 
@@ -41,7 +50,7 @@ io.on('connection', (socket) => {
   socket.on('createMessage', (message, callback) => {
     var user = users.getUser(socket.id);
 
-    if(user && isRealString(message.text)){
+    if (user && isRealString(message.text)) {
       io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));
     }
 
@@ -51,7 +60,7 @@ io.on('connection', (socket) => {
   socket.on('disconnect', function () {
     var user = users.removeUser(socket.id);
 
-    if(user) {
+    if (user) {
       io.to(user.room).emit('updateUserList', users.getUserList(user.room));
       io.to(user.room).emit('newMessage', generateMessage('Admin', `${user.name} has left.`));
     }
