@@ -4,8 +4,8 @@
   "description": "Simple socket.io webChat application",
   "main": "index.js",
   "scripts": {
-    "start": "node server/server.js",
-},
+    "start": "node server/server.js"
+  },
   "author": "Leandro Silva",
   "license": "ISC",
   "dependencies": {
